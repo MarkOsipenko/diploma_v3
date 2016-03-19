@@ -1,0 +1,47 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/home/mark/Diploma/diploma_v3/app/controllers/page_links_controller.rb": [
+        1,
+        null
+      ],
+      "/home/mark/Diploma/diploma_v3/app/controllers/application_controller.rb": [
+        1,
+        null,
+        null,
+        1,
+        null
+      ],
+      "/home/mark/Diploma/diploma_v3/spec/helpers/page_links_helper_spec.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null
+      ],
+      "/home/mark/Diploma/diploma_v3/spec/models/page_link_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        null
+      ],
+      "/home/mark/Diploma/diploma_v3/app/models/page_link.rb": [
+        1,
+        null,
+        null
+      ]
+    },
+    "timestamp": 1458396534
+  }
+}
