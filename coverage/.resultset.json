@@ -3,6 +3,10 @@
     "coverage": {
       "/home/mark/Diploma/diploma_v3/app/controllers/page_links_controller.rb": [
         1,
+        1,
+        0,
+        null,
+        null,
         null
       ],
       "/home/mark/Diploma/diploma_v3/app/controllers/application_controller.rb": [
@@ -42,6 +46,6 @@
         null
       ]
     },
-    "timestamp": 1458396534
+    "timestamp": 1458397862
   }
 }
