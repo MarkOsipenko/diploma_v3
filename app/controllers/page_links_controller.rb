@@ -1,0 +1,2 @@
+class PageLinksController < ApplicationController
+end
