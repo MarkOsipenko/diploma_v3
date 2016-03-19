@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PageLink, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:current_link) { create :page_link }
+
+  it { expect(current_link.name).to eq("hello")}
 end

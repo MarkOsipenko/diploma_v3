@@ -37,7 +37,9 @@
         1,
         null,
         1,
-        1,
+        2,
+        null,
+        2,
         null
       ],
       "/home/mark/Diploma/diploma_v3/app/models/page_link.rb": [
@@ -46,6 +48,6 @@
         null
       ]
     },
-    "timestamp": 1458397862
+    "timestamp": 1458399679
   }
 }
