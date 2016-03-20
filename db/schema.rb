@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160319123426) do
+ActiveRecord::Schema.define(version: 20160320135919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,10 +24,17 @@ ActiveRecord::Schema.define(version: 20160319123426) do
   end
 
   create_table "pages", force: :cascade do |t|
-    t.string   "url",        limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "url"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  end
+
+  create_table "pages_page_links", force: :cascade do |t|
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "page_id"
+    t.integer  "page_link_id"
   end
 
 end

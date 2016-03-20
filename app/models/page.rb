@@ -1,6 +1,8 @@
 class Page < ActiveRecord::Base
-  validates :url, presence: true, uniqueness: {message: "page url exist"}, url: true, 
-  validates :body, presence: true,
+  validates :url, presence: true, uniqueness: { message: "page url exist" }, url: true
+  validates :body, presence: true
+  has_many :pages_page_links
+  has_many :page_links, through: :pages_page_links
 
   # def enescape_link
   #   if  self.url != nil
