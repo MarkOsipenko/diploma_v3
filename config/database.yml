@@ -20,11 +20,16 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
+  username: diploma_v3
+  password: password1
+  host: localhost
 
 development:
   <<: *default
   database: diploma_v3_development
-
+  username: diploma_v3
+  password: password1
+  host: localhost
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
@@ -58,7 +63,9 @@ development:
 test:
   <<: *default
   database: diploma_v3_test
-
+  username: diploma_v3
+  password: password1
+  host: localhost
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -81,5 +88,4 @@ test:
 production:
   <<: *default
   database: diploma_v3_production
-  username: diploma_v3
   password: <%= ENV['DIPLOMA_V3_DATABASE_PASSWORD'] %>
