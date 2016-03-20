@@ -11,7 +11,4 @@ class PageLink < ActiveRecord::Base
     self.url = URI::unescape(self.url)
   end
 
-  def link_format
-    true if /^https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_-]+$/ === self.url
-  end
 end
