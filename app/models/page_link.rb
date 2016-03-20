@@ -9,23 +9,6 @@ class PageLink < ActiveRecord::Base
     self.url = URI::unescape(self.url)
   end
 
-  # to Page model
-  # def enescape_link
-  #   if  self.url != nil
-  #     if /^\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === self.url
-  #       self.url = "https://#{ detect_domain }#{ self.url }"
-  #     elsif /^\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === self.url
-  #       self.url = "https:#{ self.url }"
-  #     elsif /https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === self.url
-  #       self.url = self.url
-  #     end
-  #   end
-  # end
-  #
-  # def detect_domain
-  #   Addressable::URI.parse(self.url).host
-  # end
-
   def link_format
     true if /^https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_-]+$/ === self.url
   end
