@@ -29,7 +29,7 @@ class Page < ActiveRecord::Base
   def find_links
     links_in_page = @result_parsing_page.css("a")
     links_in_page.each do |link|
-      enescape_link(link['href'])
+      full_link = enescape_link(link['href'])
       # if (link_format(@link_with_domain) == true)
       #   puts @link_with_domain
       #   # self.return_existing_page_link(@link_with_domain)
@@ -41,13 +41,6 @@ class Page < ActiveRecord::Base
   end
 
   def enescape_link(link)
-    # if /^\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === link
-    #   @link_with_domain = "https://#{ detect_domain }#{ link }"
-    # elsif /^\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === link
-    #   @link_with_domain = "https:#{ self.url }"
-    # elsif /https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === link
-    #   @link_with_domain = link
-    # end
     if /^\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === link
       "https://#{ detect_domain }#{ link }"
     elsif /^\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === link

@@ -27,11 +27,4 @@ RSpec.describe PageLink, type: :model do
     it { expect(rus_link_encode.detect_domain).to eq("ru.wikipedia.org") }
   end
 
-  context "format_link method" do
-    it { expect(current_link.link_format).to be(true) }
-    it { expect(rus_link.link_format).to be(true) }
-    it { expect(rus_link_encode.link_format).to be(true) }
-    it { expect(external_link.link_format).to be(nil) }
-  end
-
 end

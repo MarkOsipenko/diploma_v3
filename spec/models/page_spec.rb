@@ -14,15 +14,13 @@ RSpec.describe Page, type: :model do
 
   context "enescape_link method" do
     it { expect(page.enescape_link("https://en.wikipedia.org/wiki/Hello")).to eq("https://en.wikipedia.org/wiki/Hello") }
-    it { expect(page.enescape_link("//en.wikipedia.org/wiki/Hello")).to eq("https://en.wikipedia.org/wiki/Hello") }
-    it { expect(page.enescape_link("/wiki/Hello")).to eq("https://en.wikipedia.org/wiki/Hello") }
+    it { expect(page.enescape_link("//en.wikipedia.org/wiki/Hello")).to       eq("https://en.wikipedia.org/wiki/Hello") }
+    it { expect(page.enescape_link("/wiki/Hello")).to                         eq("https://en.wikipedia.org/wiki/Hello") }
     it { expect(page.enescape_link("")).to eq(nil) }
-
     it { expect(page.enescape_link("https://ru.wikipedia.org/wiki/Анализ")).to eq("https://ru.wikipedia.org/wiki/Анализ") }
-    it { expect(page.enescape_link("//ru.wikipedia.org/wiki/Анализ")).to eq("https://ru.wikipedia.org/wiki/Анализ") }
-    # вернет en.wikipedia потому что сморит на page
-    it { expect(page.enescape_link("/wiki/Анализ")).to eq("https://en.wikipedia.org/wiki/Анализ") }
+    it { expect(page.enescape_link("//ru.wikipedia.org/wiki/Анализ")).to       eq("https://ru.wikipedia.org/wiki/Анализ") }
+    # вернет en.wikipedia потому что смоnрит на page from factory
+    it { expect(page.enescape_link("/wiki/Анализ")).to                         eq("https://en.wikipedia.org/wiki/Анализ") }
     it { expect(page.enescape_link("")).to eq(nil) }
-
   end
 end
