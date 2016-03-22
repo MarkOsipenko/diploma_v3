@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :page do
+  resources :pages do
     resources :page_links
   end
   # The priority is based upon order of creation: first created -> highest priority.
