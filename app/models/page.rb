@@ -1,6 +1,6 @@
 require "open-uri"
 require "nokogiri"
-
+require 'yaml'
 class Page < ActiveRecord::Base
   validates :url, presence: true, uniqueness: { message: "page url exist" }, url: true
   validates :body, presence: true
@@ -30,25 +30,28 @@ class Page < ActiveRecord::Base
     links_in_page = @result_parsing_page.css("a")
     links_in_page.each do |link|
       full_link = enescape_link(link['href'])
-      # if (link_format(@link_with_domain) == true)
-      #   puts @link_with_domain
-      #   # self.return_existing_page_link(@link_with_domain)
-      #   self.page_links.create(url: @link_with_domain, name: link.text)
-      #   self.save
-      # end
+      if (link_format(full_link) == true)
+        # self.return_existing_page_link(@link_with_domain)
+        self.page_links.create(url: full_link, name: link.text)
+        self.save
+      end
     end
     # links_in_page
   end
 
   def enescape_link(link)
-    if /^\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === link
-      "https://#{ detect_domain }#{ link }"
-    elsif /^\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === link
-      "https:#{ link }"
-    elsif /https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === link
-      link
+    if link != nil
+      encode_link = URI::unescape(link)
+      if /^\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === encode_link
+        "https://#{ detect_domain }#{ encode_link }"
+      elsif /^\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === encode_link
+        "https:#{ encode_link }"
+      elsif /https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_()-]+$/ === encode_link
+        encode_link
+      end
     end
   end
+
 
   def detect_domain
     Addressable::URI.parse(self.url).host
