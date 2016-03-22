@@ -27,9 +27,9 @@ RSpec.describe Page, type: :model do
   end
 
   context "find_links method" do
-    let(:page_with_link) { Page.custom_create("https://ru.wikipedia.org/wiki/Синтаксический_анализ") }
+    let(:page_with_link) { Page.custom_create("https://ru.wikipedia.org/wiki/Лондонская_национальная_галерея") }
     before { allow_any_instance_of(Page).to receive(:find_links).and_call_original }
-    it { expect(page_with_link.page_links.count).to eq(48) }
+    it { expect(page_with_link.page_links.count).to eq(138) }
   end
 
 end

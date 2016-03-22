@@ -1,4 +1,5 @@
 - @links.each do |link|
-  %li= link.url
-
+  %li
+    = link.url
+    %b= link.name
 = render "pages/page"
