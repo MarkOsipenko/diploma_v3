@@ -31,12 +31,23 @@ class Page < ActiveRecord::Base
     links_in_page.each do |link|
       full_link = enescape_link(link['href'])
       if (link_format(full_link) == true)
-        # self.return_existing_page_link(@link_with_domain)
+        self.return_existing_page_link(full_link)
         self.page_links.create(url: full_link, name: link.text)
         self.save
       end
     end
     # links_in_page
+  end
+
+  def return_existing_page_link(link_address)
+    if check_link_exist(link_address)
+      self.pages_page_links.create(page_link: PageLink.find_by_url(link_address))
+      self.save
+    end
+  end
+
+  def check_link_exist(link_address)
+    true if PageLink.where(url: link_address).exists? && !self.page_links.where(url: link_address).exists? 
   end
 
   def enescape_link(link)
