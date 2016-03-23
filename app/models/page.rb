@@ -10,6 +10,7 @@ class Page < ActiveRecord::Base
   has_many :categories, through: :pages_categories
 
   after_create :get_page_content
+  after_create :detect_category
   after_create :find_links
 
   class << self
@@ -27,6 +28,15 @@ class Page < ActiveRecord::Base
   def get_page_content
     url = URI.encode(self.url)
     @result_parsing_page ||= Nokogiri::HTML(open(url))
+  end
+
+
+  def detect_category
+    page_categories = @result_parsing_page.css(".mw-normal-catlinks ul a")
+    page_categories.each do |categ|
+      self.categories.create(name: categ.text)
+      self.save
+    end
   end
 
   def find_links
@@ -74,5 +84,7 @@ class Page < ActiveRecord::Base
     true if /^https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_-]+$/ === url
   end
 
+
 end
 
+  
