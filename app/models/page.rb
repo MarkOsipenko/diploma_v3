@@ -6,6 +6,8 @@ class Page < ActiveRecord::Base
   validates :body, presence: true
   has_many :pages_page_links
   has_many :page_links, through: :pages_page_links
+  has_many :pages_categories
+  has_many :categories, through: :pages_categories
   after_create :get_page_content
   after_create :find_links
 
