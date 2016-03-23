@@ -20,18 +20,4 @@ RSpec.describe PageLink, type: :model do
     it { expect(rus_link1_encode).to be_valid }
   end
 
-
-  xcontext "detect_domain method" do
-    it { expect(current_link.detect_domain).to    eq("en.wikipedia.org") }
-    it { expect(rus_link.detect_domain).to        eq("ru.wikipedia.org") }
-    it { expect(rus_link_encode.detect_domain).to eq("ru.wikipedia.org") }
-  end
-
-  context "format_link method" do
-    it { expect(current_link.link_format).to be(true) }
-    it { expect(rus_link.link_format).to be(true) }
-    it { expect(rus_link_encode.link_format).to be(true) }
-    it { expect(external_link.link_format).to be(nil) }
-  end
-
 end

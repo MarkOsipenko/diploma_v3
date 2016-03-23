@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160323142532) do
+=======
+ActiveRecord::Schema.define(version: 20160320135919) do
+>>>>>>> page
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,12 +33,27 @@ ActiveRecord::Schema.define(version: 20160323142532) do
     t.datetime "updated_at", null: false
   end
 
+<<<<<<< HEAD
   create_table "pages_categories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "page_id"
     t.integer  "category_id"
+=======
+  create_table "pages", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "url"
+    t.text     "body"
+  end
+
+  create_table "pages_page_links", force: :cascade do |t|
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "page_id"
+    t.integer  "page_link_id"
+>>>>>>> page
   end
 
 end
