@@ -30,7 +30,6 @@ class Page < ActiveRecord::Base
     @result_parsing_page ||= Nokogiri::HTML(open(url))
   end
 
-
   def detect_category
     page_categories = @result_parsing_page.css(".mw-normal-catlinks ul a")
     page_categories.each do |categ|
@@ -49,7 +48,6 @@ class Page < ActiveRecord::Base
         self.save
       end
     end
-    # links_in_page
   end
 
   def return_existing_page_link(link_address)
@@ -84,7 +82,4 @@ class Page < ActiveRecord::Base
     true if /^https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_-]+$/ === url
   end
 
-
 end
-
-  
