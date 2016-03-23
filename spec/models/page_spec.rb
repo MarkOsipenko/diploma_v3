@@ -38,4 +38,9 @@ RSpec.describe Page, type: :model do
     it { expect(PageLink.where(url: "https://en.wikipedia.org/wiki/Salutation").count).to eq(1) }
   end
 
+  context "detect_domain method" do
+    let(:rus_page) { Page.custom_create("https://ru.wikipedia.org/wiki/Лондон") }
+    it { expect(page.detect_domain).to            eq("en.wikipedia.org") }
+    it { expect(rus_page.detect_domain).to        eq("ru.wikipedia.org") }
+  end
 end

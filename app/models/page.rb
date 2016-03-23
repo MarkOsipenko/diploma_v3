@@ -1,6 +1,6 @@
 require "open-uri"
 require "nokogiri"
-require 'yaml'
+
 class Page < ActiveRecord::Base
   validates :url, presence: true, uniqueness: { message: "page url exist" }, url: true
   validates :body, presence: true
@@ -47,7 +47,7 @@ class Page < ActiveRecord::Base
   end
 
   def check_link_exist(link_address)
-    true if PageLink.where(url: link_address).exists? && !self.page_links.where(url: link_address).exists? 
+    true if PageLink.where(url: link_address).exists? && !self.page_links.where(url: link_address).exists?
   end
 
   def enescape_link(link)
@@ -63,7 +63,6 @@ class Page < ActiveRecord::Base
     end
   end
 
-
   def detect_domain
     Addressable::URI.parse(self.url).host
   end
@@ -73,3 +72,4 @@ class Page < ActiveRecord::Base
   end
 
 end
+
