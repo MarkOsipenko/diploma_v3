@@ -2,3 +2,5 @@
   %li.page-link
     %b= link.name
 = render "pages/page"
+
+= render 'categories/show', categories: @page.categories
