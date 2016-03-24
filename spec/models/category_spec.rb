@@ -13,7 +13,7 @@ RSpec.describe Category, type: :model do
     it { expect{ cat_dup }.to raise_error(ActiveRecord::RecordInvalid) }
   end
 
-  xcontext "check accessory page to category" do
+  context "check accessory page to category" do
     before { allow_any_instance_of(Page).to receive(:find_links).and_return([]) }
     let!(:page) { Page.custom_create("https://en.wikipedia.org/wiki/Curacha") }
     it { expect(page.categories.count).to eq(4) }

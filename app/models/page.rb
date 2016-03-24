@@ -10,6 +10,7 @@ class Page < ActiveRecord::Base
   has_many :categories, through: :pages_categories
 
   after_create :get_page_content
+  after_create :detect_category
   after_create :find_links
 
   class << self
@@ -29,29 +30,51 @@ class Page < ActiveRecord::Base
     @result_parsing_page ||= Nokogiri::HTML(open(url))
   end
 
+  def detect_category
+    page_categories = @result_parsing_page.css(".mw-normal-catlinks ul a")
+    page_categories.each do |categ|
+      if !self.return_existing_category(categ.text)
+        self.categories.create(name: categ.text)
+      end
+    end
+  end
+  
+#------------------
+  def return_existing_category(category)
+    if Category.where(name: category).exists?
+      self.pages_categories.find_or_create_by(category: Category.find_by_url(link_address))
+    end
+  end
+#------------------
+
+
+
   def find_links
     links_in_page = @result_parsing_page.css("a")
     links_in_page.each do |link|
-      full_link = enescape_link(link['href'])
-      if (link_format(full_link) == true)
-        self.return_existing_page_link(full_link)
-        self.page_links.create(url: full_link, name: link.text)
-        self.save
+      full_link = self.enescape_link(link['href'])
+      if self.link_format(full_link) && !self.return_existing_page_link(full_link)
+          self.page_links.create(url: full_link, name: link.text)
       end
     end
-    # links_in_page
   end
+#-----------------------
+  # def return_existing_page_link(link_address)
+  #   if check_link_exist(link_address)
+  #     self.pages_page_links.create(page_link: PageLink.find_by_url(link_address))
+  #   end
+  # end
+  #
+  # def check_link_exist(link_address)
+  #   true if !self.page_links.where(url: link_address).exists? && PageLink.where(url: link_address).exists?
+  # end
 
   def return_existing_page_link(link_address)
-    if check_link_exist(link_address)
-      self.pages_page_links.create(page_link: PageLink.find_by_url(link_address))
-      self.save
+    if PageLink.where(url: link_address).exists?
+      self.pages_page_links.find_or_create_by(page_link: PageLink.find_by_url(link_address))
     end
   end
-
-  def check_link_exist(link_address)
-    true if PageLink.where(url: link_address).exists? && !self.page_links.where(url: link_address).exists?
-  end
+#-----------------------
 
   def enescape_link(link)
     if link != nil
@@ -75,4 +98,3 @@ class Page < ActiveRecord::Base
   end
 
 end
-

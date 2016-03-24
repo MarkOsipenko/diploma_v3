@@ -43,4 +43,22 @@ RSpec.describe Page, type: :model do
     it { expect(page.detect_domain).to            eq("en.wikipedia.org") }
     it { expect(rus_page.detect_domain).to        eq("ru.wikipedia.org") }
   end
+
+  context "detect_category method" do
+    let(:detect_category_method) { Page.custom_create("https://en.wikipedia.org/wiki/Hello") }
+    let!(:detect_category1_method) { Page.custom_create("https://ru.wikipedia.org/wiki/Москва") }
+    it { expect(detect_category_method.categories.count).to eq(2) }
+    it { expect(detect_category1_method.categories.count).to eq(17) }
+    it { expect(Category.where(name: "Золотое кольцо России").exists?).to be(true) }
+
+    context "return_existing_category method" do
+      let!(:exist_categ) { Category.create(name: "Метательное оружие") }
+      let(:page) { Page.custom_create("https://ru.wikipedia.org/wiki/Лук_(оружие)") }
+      it { expect(        Category.where(name: "Метательное оружие").exists?).to be(true) }
+      it { expect( page.categories.where(name: "Метательное оружие").exists?).to be(true) }
+      it { expect( Category.where(name: "Метательное оружие").count).to eq(1) }
+    end
+
+  end
+
 end
