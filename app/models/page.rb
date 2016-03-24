@@ -38,11 +38,11 @@ class Page < ActiveRecord::Base
       end
     end
   end
-  
+
 #------------------
   def return_existing_category(category)
     if Category.where(name: category).exists?
-      self.pages_categories.find_or_create_by(category: Category.find_by_url(link_address))
+      self.pages_categories.find_or_create_by(category: Category.find_by_name(category))
     end
   end
 #------------------

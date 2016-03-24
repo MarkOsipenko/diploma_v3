@@ -59,6 +59,13 @@ RSpec.describe Page, type: :model do
       it { expect( Category.where(name: "Метательное оружие").count).to eq(1) }
     end
 
+    context "return_existing_category if category existed" do
+      let!(:page_cat) { Page.custom_create("https://ru.wikipedia.org/wiki/Мейн-кун") }
+      let!(:page_cat2) { Page.custom_create("https://ru.wikipedia.org/wiki/Персидская_кошка") }
+      it { expect(Category.where(name: "Породы кошек").count).to eq(1) }
+      it { expect(Category.find_by_name("Породы кошек").pages).to include(Page.find_by_url("https://ru.wikipedia.org/wiki/Мейн-кун")) }
+      it { expect(Category.find_by_name("Породы кошек").pages).to include(Page.find_by_url("https://ru.wikipedia.org/wiki/Персидская_кошка")) }
+    end
   end
 
 end
