@@ -8,7 +8,6 @@ class Page < ActiveRecord::Base
   has_many :page_links, through: :pages_page_links
   has_many :pages_categories
   has_many :categories, through: :pages_categories
-
   after_create :get_page_content
   after_create :detect_category
   after_create :find_links
@@ -39,15 +38,11 @@ class Page < ActiveRecord::Base
     end
   end
 
-#------------------
   def return_existing_category(category)
     if Category.where(name: category).exists?
       self.pages_categories.find_or_create_by(category: Category.find_by_name(category))
     end
   end
-#------------------
-
-
 
   def find_links
     links_in_page = @result_parsing_page.css("a")
@@ -58,23 +53,12 @@ class Page < ActiveRecord::Base
       end
     end
   end
-#-----------------------
-  # def return_existing_page_link(link_address)
-  #   if check_link_exist(link_address)
-  #     self.pages_page_links.create(page_link: PageLink.find_by_url(link_address))
-  #   end
-  # end
-  #
-  # def check_link_exist(link_address)
-  #   true if !self.page_links.where(url: link_address).exists? && PageLink.where(url: link_address).exists?
-  # end
 
   def return_existing_page_link(link_address)
     if PageLink.where(url: link_address).exists?
       self.pages_page_links.find_or_create_by(page_link: PageLink.find_by_url(link_address))
     end
   end
-#-----------------------
 
   def enescape_link(link)
     if link != nil
