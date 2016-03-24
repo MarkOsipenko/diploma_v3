@@ -34,7 +34,6 @@ class Page < ActiveRecord::Base
     page_categories = @result_parsing_page.css(".mw-normal-catlinks ul a")
     page_categories.each do |categ|
       self.categories.create(name: categ.text)
-      self.save
     end
   end
 
@@ -42,10 +41,8 @@ class Page < ActiveRecord::Base
     links_in_page = @result_parsing_page.css("a")
     links_in_page.each do |link|
       full_link = enescape_link(link['href'])
-      if (link_format(full_link) == true)
-        self.return_existing_page_link(full_link)
-        self.page_links.create(url: full_link, name: link.text)
-        self.save
+      if self.link_format(full_link) && !self.return_existing_page_link(full_link)
+          self.page_links.create(url: full_link, name: link.text)
       end
     end
   end
@@ -53,12 +50,11 @@ class Page < ActiveRecord::Base
   def return_existing_page_link(link_address)
     if check_link_exist(link_address)
       self.pages_page_links.create(page_link: PageLink.find_by_url(link_address))
-      self.save
     end
   end
 
   def check_link_exist(link_address)
-    true if PageLink.where(url: link_address).exists? && !self.page_links.where(url: link_address).exists?
+    true if !self.page_links.where(url: link_address).exists? && PageLink.where(url: link_address).exists?
   end
 
   def enescape_link(link)
