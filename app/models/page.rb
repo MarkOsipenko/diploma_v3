@@ -46,15 +46,18 @@ class Page < ActiveRecord::Base
     links_in_page = @result_parsing_page.css("a")
     links_in_page.each do |link|
       full_link = self.enescape_link(link['href'])
-      if check_link_format(full_link)
-         self.page_links.create(url: full_link, name: link.text) unless self.find_or_create_page_link(full_link)
-      end
+      create_page_link_in_page(full_link, link.text) if check_link_format(full_link)
     end
   end
 
+  def create_page_link_in_page(full_link, link)
+    self.page_links.create(url: full_link, name: link) unless self.find_or_create_page_link(full_link)
+  end
+
+
   def find_or_create_page_link(link_address)
     page = PageLink.where(url: link_address).first
-      self.pages_page_links.find_or_create_by(page_link: page) unless page == nil
+    self.pages_page_links.find_or_create_by(page_link: page) unless page == nil
   end
 
   def enescape_link(link)
