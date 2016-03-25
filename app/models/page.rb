@@ -32,32 +32,29 @@ class Page < ActiveRecord::Base
   def detect_category
     page_categories = @result_parsing_page.css(".mw-normal-catlinks ul a")
     page_categories.each do |categ|
-      if !self.return_existing_category(categ.text)
-        self.categories.create(name: categ.text)
-      end
+      self.categories.create(name: categ.text) unless self.find_or_create_category(categ.text)
     end
   end
 
-  def return_existing_category(category)
-    if Category.where(name: category).exists?
-      self.pages_categories.find_or_create_by(category: Category.find_by_name(category))
-    end
+  def find_or_create_category(category)
+    category = Category.where(name: category).first
+    self.pages_categories.find_or_create_by(category: category) unless category == nil
+
   end
 
   def find_links
     links_in_page = @result_parsing_page.css("a")
     links_in_page.each do |link|
       full_link = self.enescape_link(link['href'])
-      if self.link_format(full_link) && !self.return_existing_page_link(full_link)
-          self.page_links.create(url: full_link, name: link.text)
+      if check_link_format(full_link)
+         self.page_links.create(url: full_link, name: link.text) unless self.find_or_create_page_link(full_link)
       end
     end
   end
 
-  def return_existing_page_link(link_address)
-    if PageLink.where(url: link_address).exists?
-      self.pages_page_links.find_or_create_by(page_link: PageLink.find_by_url(link_address))
-    end
+  def find_or_create_page_link(link_address)
+    page = PageLink.where(url: link_address).first
+      self.pages_page_links.find_or_create_by(page_link: page) unless page == nil
   end
 
   def enescape_link(link)
@@ -77,8 +74,8 @@ class Page < ActiveRecord::Base
     Addressable::URI.parse(self.url).host
   end
 
-  def link_format(url)
-    true if /^https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_-]+$/ === url
+  def check_link_format(url)
+    /^https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_-]+$/ === url
   end
 
 end
