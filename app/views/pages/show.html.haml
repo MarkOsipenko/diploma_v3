@@ -1,6 +1,11 @@
 - @links.each do |link|
   %li.page-link
-    %b= link.name
+    = link.url
+    - if Page.find_by_url(link.url) != nil
+      = link_to link.name, page_path(Page.find_by_url(link.url).id)
+
+
+
 = render "pages/page"
 
 = render 'categories/show', categories: @page.categories

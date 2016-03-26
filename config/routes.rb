@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root 'pages#index'
+
   resources :pages do
     resources :page_links
   end
