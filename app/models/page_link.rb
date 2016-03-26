@@ -6,11 +6,14 @@ class PageLink < ActiveRecord::Base
   before_create :encoding_link
   # after_create :parse_next_page
 
+  def find_page
+    page = Page.find_by_url(self.url)
+  end
+
   def page_custom_create
     u = self.url
     Page.custom_create(u)
   end
-
 
   protected
 

@@ -20,4 +20,13 @@ RSpec.describe PageLink, type: :model do
     it { expect(rus_link1_encode).to be_valid }
   end
 
+  context "find_page method" do
+    before { allow_any_instance_of(Page).to receive(:find_links) }
+    let!(:page) { Page.custom_create("https://ru.wikipedia.org/wiki/Тридцать_дней") }
+    let!(:page_link) { PageLink.create!(url: "https://ru.wikipedia.org/wiki/Тридцать_дней", name: "Тридцать дней") }
+
+    it { expect(page_link.find_page).to eq(page) }
+
+  end
+
 end
