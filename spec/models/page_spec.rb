@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Page, type: :model do
-  before { allow_any_instance_of(Page).to receive(:find_links).and_return(["link1"]) }
-  let!(:page) { create :page }
+  before { allow_any_instance_of(Page).to receive(:find_links).and_return((["arr"])) }
+  let(:page) { create :page }
 
   context "validates" do
     it { expect(page).not_to be_invalid }
@@ -25,21 +25,22 @@ RSpec.describe Page, type: :model do
   end
 
   context "find_links method" do
-    let(:page_with_link) { Page.custom_create("https://ru.wikipedia.org/wiki/Лондонская_национальная_галерея") }
     before { allow_any_instance_of(Page).to receive(:find_links).and_call_original }
+    let(:page_with_link) { Page.custom_create("https://ru.wikipedia.org/wiki/Лондонская_национальная_галерея") }
     it { expect(page_with_link.page_links.count).to eq(138) }
   end
 
   context "return_existing_page_link method" do
+    before { allow_any_instance_of(Page).to receive(:find_links).and_call_original }
     let!(:page_link) { PageLink.create(url: "https://en.wikipedia.org/wiki/Salutation", name: "Salutation") }
     let(:custom_page) { Page.custom_create("https://en.wikipedia.org/wiki/Hello") }
-    before { allow_any_instance_of(Page).to receive(:find_links).and_call_original }
     it { expect(custom_page.page_links.where(url: "https://en.wikipedia.org/wiki/Salutation").exists?).to be(true) }
     it { expect(PageLink.where(url: "https://en.wikipedia.org/wiki/Salutation").count).to eq(1) }
   end
 
   context "detect_domain method" do
     let(:rus_page) { Page.custom_create("https://ru.wikipedia.org/wiki/Лондон") }
+    it { expect(rus_page.find_links).to eq(["arr"])  }
     it { expect(page.detect_domain).to            eq("en.wikipedia.org") }
     it { expect(rus_page.detect_domain).to        eq("ru.wikipedia.org") }
   end
@@ -67,5 +68,4 @@ RSpec.describe Page, type: :model do
       it { expect(Category.find_by_name("Породы кошек").pages).to include(Page.find_by_url("https://ru.wikipedia.org/wiki/Персидская_кошка")) }
     end
   end
-
 end

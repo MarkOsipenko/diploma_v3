@@ -39,7 +39,6 @@ class Page < ActiveRecord::Base
   def find_or_create_category(category)
     category = Category.where(name: category).first
     self.pages_categories.find_or_create_by(category: category) unless category == nil
-
   end
 
   def find_links
@@ -53,7 +52,6 @@ class Page < ActiveRecord::Base
   def create_page_link_in_page(full_link, link)
     self.page_links.create(url: full_link, name: link) unless self.find_or_create_page_link(full_link)
   end
-
 
   def find_or_create_page_link(link_address)
     page = PageLink.where(url: link_address).first
@@ -80,5 +78,4 @@ class Page < ActiveRecord::Base
   def check_link_format(url)
     /^https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_-]+$/ === url
   end
-
 end
