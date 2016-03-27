@@ -8,9 +8,11 @@ class Page < ActiveRecord::Base
   has_many :page_links, through: :pages_page_links
   has_many :pages_categories
   has_many :categories, through: :pages_categories
+  has_one :word
   after_create :get_page_content
   after_create :detect_category
   after_create :find_links
+  after_create :find_word
 
   class << self
     def custom_create(u)
@@ -22,6 +24,13 @@ class Page < ActiveRecord::Base
       page = Nokogiri::HTML(open(url))
       page.css("#mw-content-text").to_s
     end
+  end
+
+  def find_word
+    content = @result_parsing_page.css("p").first
+    name = @result_parsing_page.css("p b").first.text
+    content.children.each { |c| c.remove if c.name == 'b' }
+    Word.create!(name: name.capitalize, content: content.text, page_id: self.id)
   end
 
   def get_page_content

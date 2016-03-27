@@ -1,0 +1,5 @@
+- @words.each do |word|
+  %li
+    %p
+      =link_to word.name, page_path(word.page_id)
+      = word.content
