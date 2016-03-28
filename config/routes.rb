@@ -5,8 +5,9 @@ Rails.application.routes.draw do
 
   resources :pages do
     resources :page_links
-    resources :words
   end
+  resources :words
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
