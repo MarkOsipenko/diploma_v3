@@ -8,9 +8,11 @@ class Page < ActiveRecord::Base
   has_many :page_links, through: :pages_page_links
   has_many :pages_categories
   has_many :categories, through: :pages_categories
+  has_one :word
   after_create :get_page_content
   after_create :detect_category
   after_create :find_links
+  after_create :find_word
 
   class << self
     def custom_create(u)
@@ -37,8 +39,8 @@ class Page < ActiveRecord::Base
   end
 
   def find_or_create_category(category)
-    category = Category.where(name: category).first
-    self.pages_categories.find_or_create_by(category: category) unless category == nil
+    categ = Category.where(name: category).first
+    self.pages_categories.find_or_create_by(category: categ) unless categ == nil
   end
 
   def find_links
@@ -47,6 +49,13 @@ class Page < ActiveRecord::Base
       full_link = self.enescape_link(link['href'])
       create_page_link_in_page(full_link, link.text) if check_link_format(full_link)
     end
+  end
+
+  def find_word
+    content = @result_parsing_page.css("p").first
+    name = @result_parsing_page.css("p b").first.text
+    content.children.each { |c| c.remove if c.name == 'b' }
+    Word.create(definition: name.capitalize, content: content.text, page: self)
   end
 
   def create_page_link_in_page(full_link, link)

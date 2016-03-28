@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
-  root 'pages#index'
+  root 'words#index'
+
 
   resources :pages do
     resources :page_links
+    resources :words
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
