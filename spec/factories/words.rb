@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :word do
       page
-      name "Инструкция"
+      definition "Инструкция"
       content "документ, содержащий правила, указания или руководства."
   end
 end

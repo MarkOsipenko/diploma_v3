@@ -26,13 +26,6 @@ class Page < ActiveRecord::Base
     end
   end
 
-  def find_word
-    content = @result_parsing_page.css("p").first
-    name = @result_parsing_page.css("p b").first.text
-    content.children.each { |c| c.remove if c.name == 'b' }
-    Word.create!(name: name.capitalize, content: content.text, page_id: self.id)
-  end
-
   def get_page_content
     url = URI.encode(self.url)
     @result_parsing_page ||= Nokogiri::HTML(open(url))
@@ -46,8 +39,8 @@ class Page < ActiveRecord::Base
   end
 
   def find_or_create_category(category)
-    category = Category.where(name: category).first
-    self.pages_categories.find_or_create_by(category: category) unless category == nil
+    categ = Category.where(name: category).first
+    self.pages_categories.find_or_create_by(category: categ) unless categ == nil
   end
 
   def find_links
@@ -56,6 +49,13 @@ class Page < ActiveRecord::Base
       full_link = self.enescape_link(link['href'])
       create_page_link_in_page(full_link, link.text) if check_link_format(full_link)
     end
+  end
+
+  def find_word
+    content = @result_parsing_page.css("p").first
+    name = @result_parsing_page.css("p b").first.text
+    content.children.each { |c| c.remove if c.name == 'b' }
+    Word.create(definition: name.capitalize, content: content.text, page: self)
   end
 
   def create_page_link_in_page(full_link, link)

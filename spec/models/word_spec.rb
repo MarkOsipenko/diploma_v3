@@ -6,12 +6,12 @@ RSpec.describe Word, type: :model do
 
   context "validates" do
     let(:word) { create :word, page: page }
-    let(:without_name) { Word.create!(name: "", content: "1", page_id: 1) }
-    let(:without_content) { Word.create!(name: "Мир", content: "", page_id: 1) }
-    let(:without_page) { Word.create!(name: "Млечный путь", content: "галактика" ) }
+    let(:without_name) { Word.create!(definition: "", content: "1", page_id: 1) }
+    let(:without_content) { Word.create!(definition: "Мир", content: "", page_id: 1) }
+    let(:without_page) { Word.create!(definition: "Млечный путь", content: "галактика" ) }
 
     it { expect(word).to be_valid }
-    it { expect{ without_name.name }.to    raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name can't be blank") }
+    it { expect{ without_name.definition }.to    raise_error(ActiveRecord::RecordInvalid, "Validation failed: Definition can't be blank") }
     it { expect{ without_content.content }.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Content can't be blank") }
     it { expect{ without_page.page_id }.to    raise_error(ActiveRecord::RecordInvalid, "Validation failed: Page can't be blank") }
   end
