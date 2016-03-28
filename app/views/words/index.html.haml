@@ -3,3 +3,6 @@
     %p
       =link_to word.definition, page_path(word.page_id)
       = word.content
+
+%ul.pagination.pagination_wrap
+  = will_paginate @words, renderer: BootstrapPagination::Rails
