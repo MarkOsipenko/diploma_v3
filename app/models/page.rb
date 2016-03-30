@@ -52,7 +52,7 @@ class Page < ActiveRecord::Base
   end
 
   def find_word
-    content = @result_parsing_page.css("p").first
+    content = @result_parsing_page.css("#mw-content-text p").first
     name = @result_parsing_page.css("#firstHeading").text
     content.children.each { |c| c.remove if c.name == 'b' }
     Word.create(definition: name.capitalize, content: content.text, page: self)

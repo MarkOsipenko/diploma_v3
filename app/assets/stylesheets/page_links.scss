@@ -3,7 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-li.page-link {
-  display: inline-block;
-  border: 1px solid #848484;
+.container-link {
+  li.page-link {
+    display: inline-block;
+    border: 1px solid #848484;
+  }
 }
