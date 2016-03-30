@@ -10,9 +10,8 @@ RSpec.describe "Page", type: :feature do
   end
 
   context "visit pages_page_links" do
-    before { visit page_page_links_path(custom_page) }
-    it { is_expected.to have_content("https://ru.wikipedia.org/wiki/Гринвичский_госпиталь") }
-    it { is_expected.to have_content("Гринвичский госпиталь") }
+    before { visit page_links_path }
+    it { is_expected.to have_content(PageLink.count) }
   end
 
 end
