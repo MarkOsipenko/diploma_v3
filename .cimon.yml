@@ -1,0 +1,46 @@
+services:
+  postgresql:
+    from: postgres
+  rails:
+    from: ruby:2.3.0
+    cache:
+      - /bundle
+      - /app/public/assets
+      - /app/public/uploads
+    build:
+      - apt-get update
+      - apt-get install -y libqt4-dev pkg-config
+      - apt-get install -y nodejs postgresql-client sqlite3
+      - apt-get install -y curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev libxml2-dev libxslt-dev
+      - gem install bundler
+      - gem install foreman
+
+
+server:
+  dependencies: [postgresql]
+  prepare:
+    - bundle install --path /bundle
+    - bin/rake db:create db:migrate db:seed
+    - bin/rake assets:precompile
+  service: rails
+  folder: /app
+  cmd: foreman start
+  port: 80
+  env:
+    - RAILS_ENV=production
+    - RACK_ENV=production
+    - PORT=80
+    - DATABASE_URL=postgres://postgres:mysecretpassword@127.0.0.1:5432/db
+
+test:
+  dependencies: [postgresql]
+  prepare:
+    - bundle install --path /bundle
+    - bin/rake db:create
+  service: rails
+  folder: /app
+  cmd: ./bin/rspec
+  env:
+    - RAILS_ENV=test
+    - RACK_ENV=test
+    - DATABASE_URL=postgres://postgres:mysecretpassword@127.0.0.1:5432/db
