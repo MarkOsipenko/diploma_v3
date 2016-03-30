@@ -1,8 +1,11 @@
 .container
-  - @links.each do |link|
-    %li.page-link
-      = link_to link.name, page_path(Page.find_by_url(link.url).id) unless Page.find_by_url(link.url) == nil
-
+  %a.show_links.btn.btn-primary{"aria-controls" => "collapseExample", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseExample", :role => "button"}
+    Links
+  #collapseExample.collapse
+    .well
+      - @links.each do |link|
+        %li.page-link
+          = link_to link.name, page_path(Page.find_by_url(link.url).id) unless Page.find_by_url(link.url) == nil
 
 
 = render "pages/page"
