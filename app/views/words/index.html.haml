@@ -5,4 +5,4 @@
       = word.content
 
 %ul.pagination.pagination_wrap
-  = will_paginate @words, renderer: BootstrapPagination::Rails
+  = will_paginate @words, :inner_window => 1, :outer_window => 0, :renderer => BootstrapPagination::Rails, :previous_label => '&larr;'.html_safe, :next_label => '&rarr;'.html_safe
