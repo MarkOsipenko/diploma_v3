@@ -18,7 +18,7 @@ RSpec.describe Word, type: :model do
 
   context "check accessory" do
     let(:word) { Word.first }
-    it { expect(page.word).to eq(word)}
+    it { expect(page.word).to eq(word) }
   end
 
 end

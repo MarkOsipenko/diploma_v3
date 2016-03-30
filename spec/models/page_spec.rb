@@ -68,5 +68,10 @@ RSpec.describe Page, type: :model do
       it { expect(Category.find_by_name("Породы кошек").pages).to include(Page.find_by_url("https://ru.wikipedia.org/wiki/Мейн-кун")) }
       it { expect(Category.find_by_name("Породы кошек").pages).to include(Page.find_by_url("https://ru.wikipedia.org/wiki/Персидская_кошка")) }
     end
+
+    context "check definition" do
+      let!(:page1) { Page.custom_create("https://ru.wikipedia.org/wiki/Мумий_Тролль") }
+      it { expect(page1.word.definition).to eq("Мумий Тролль") }
+    end
   end
 end
