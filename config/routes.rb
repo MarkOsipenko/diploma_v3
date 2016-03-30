@@ -2,10 +2,8 @@ Rails.application.routes.draw do
 
   root 'words#index'
 
-
-  resources :pages do
-    resources :page_links
-  end
+  resources :page_links
+  resources :pages
   resources :words
 
   # The priority is based upon order of creation: first created -> highest priority.
