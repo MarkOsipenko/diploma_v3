@@ -36,12 +36,11 @@ gem 'haml'
 gem "factory_girl_rails", "~> 4.0"
 gem 'capybara'
 gem 'nokogiri'
-gem 'sidekiq'
+gem 'sidekiq', '~> 4.1', '>= 4.1.1'
 gem "validate_url"
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'publicsuffix', '~> 0.0.1'
 gem 'addressable'
-gem 'sidekiq'
 gem 'will_paginate-bootstrap'
 gem 'foreman', '~> 0.78.0'
 
