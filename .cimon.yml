@@ -22,8 +22,8 @@ server:
   dependencies: [postgresql, redis]
   prepare:
     - bundle install --path /bundle
-    - bin/rake db:create db:migrate db:seed
-    - bin/rake assets:precompile
+    - rake db:create db:migrate db:seed
+    - rake assets:precompile
   service: rails
   folder: /app
   cmd: foreman start
@@ -38,7 +38,7 @@ test:
   dependencies: [postgresql, redis]
   prepare:
     - bundle install --path /bundle
-    - bin/rake db:create
+    - rake db:create
   service: rails
   folder: /app
   cmd: rspec
