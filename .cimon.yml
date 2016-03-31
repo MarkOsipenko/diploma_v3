@@ -35,13 +35,13 @@ server:
     - DATABASE_URL=postgres://postgres:mysecretpassword@127.0.0.1:5432/db
 
 test:
-  dependencies: [postgresql]
+  dependencies: [postgresql, redis]
   prepare:
     - bundle install --path /bundle
     - bin/rake db:create
   service: rails
   folder: /app
-  cmd: ./bin/rspec
+  cmd: rspec
   env:
     - RAILS_ENV=test
     - RACK_ENV=test
