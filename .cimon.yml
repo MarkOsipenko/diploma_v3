@@ -1,6 +1,8 @@
 services:
   postgresql:
     from: postgres
+  redis:
+    from: redis
   rails:
     from: ruby:2.3.0
     cache:
@@ -17,7 +19,7 @@ services:
 
 
 server:
-  dependencies: [postgresql]
+  dependencies: [postgresql, redis]
   prepare:
     - bundle install --path /bundle
     - bin/rake db:create db:migrate db:seed
