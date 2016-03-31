@@ -1,2 +1,2 @@
-web: ./bin/rails -p 80
+web: ./bin/rails s -p $PORT
 worker: bundle exec sidekiq
