@@ -4,7 +4,7 @@ class PageLink < ActiveRecord::Base
   has_many :pages_page_links
   has_many :pages, through: :pages_page_links
   before_create :encoding_link
-  # after_create :parse_next_page
+  after_create :parse_next_page
 
   def find_page
     page = Page.find_by_url(self.url)
@@ -21,9 +21,9 @@ class PageLink < ActiveRecord::Base
       self.url = URI::unescape(self.url)
     end
 
-    # def parse_next_page
-    #   id = self.id
-    #   PageWorker.perform_async(id)
-    # end
+    def parse_next_page
+      id = self.id
+      HardWorker.perform_async(id)
+    end
 
 end
