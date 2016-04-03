@@ -1,13 +1,20 @@
 .container
-  %a.show_links.btn.btn-primary{"aria-controls" => "collapseExample", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseExample", :role => "button"}
+  %a.show_links.btn.btn-primary{"aria-controls" => "collapseLinks", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseLinks", :role => "button"}
     Links
-  #collapseExample.collapse
+  %a.show_links.btn.btn-primary{"aria-controls" => "collapsCategories", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseCategories", :role => "button"}
+    Categories
+
+
+  #collapseLinks.collapse
     .well
       - @links.each do |link|
         %li.page-link
           = link_to link.name, page_path(Page.find_by_url(link.url).id) unless Page.find_by_url(link.url) == nil
 
 
-= render "pages/page"
+  #collapseCategories.collapse
+    .well
+      = render 'categories/show', categories: @page.categories
 
-= render 'categories/show', categories: @page.categories
+
+= render "pages/page"
