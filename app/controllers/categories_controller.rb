@@ -1,8 +1,8 @@
 class CategoriesController < ApplicationController
   before_action :find_category, only: :show
-  
+
   def index
-    @categories = Categories.all
+    @categories = Category.all.order(:name)
   end
 
   def show

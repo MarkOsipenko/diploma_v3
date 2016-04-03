@@ -1,2 +1,3 @@
-- @pages.each do |page|
-  %li= link_to page.word.definition, page_path(page)
+.container
+  - @pages.each do |page|
+    %li= link_to page.word.definition, page_path(page)
