@@ -7,19 +7,5 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    %nav.navbar.navbar-default.navbar-top
-      .container
-        .navbar-header
-          %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
-            %span.sr-only Toggle navigation
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.navbar-brand{:href => "../"} Thesaurus
-        #navbar.collapse.navbar-collapse
-          = form_tag(words_path, :method => "get", class: "navbar-form", id: "search-form") do
-            .input-append
-              = text_field_tag :search, params[:search], class: "form-control", placeholder: "Enter the word "
-              %button.btn.btn-primary{:type => "submit"}
-                Search
+    =render "layouts/header"
     = yield
