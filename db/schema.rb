@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160327190433) do
+ActiveRecord::Schema.define(version: 20160403162509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,12 +22,17 @@ ActiveRecord::Schema.define(version: 20160327190433) do
     t.string   "name"
   end
 
+  add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
+
   create_table "page_links", force: :cascade do |t|
-    t.string   "url"
-    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "url"
+    t.string   "name"
   end
+
+  add_index "page_links", ["name"], name: "index_page_links_on_name", using: :btree
+  add_index "page_links", ["url"], name: "index_page_links_on_url", using: :btree
 
   create_table "pages", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -35,6 +40,8 @@ ActiveRecord::Schema.define(version: 20160327190433) do
     t.string   "url"
     t.text     "body"
   end
+
+  add_index "pages", ["url"], name: "index_pages_on_url", using: :btree
 
   create_table "pages_categories", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -57,5 +64,7 @@ ActiveRecord::Schema.define(version: 20160327190433) do
     t.text     "content"
     t.string   "definition"
   end
+
+  add_index "words", ["definition"], name: "index_words_on_definition", using: :btree
 
 end
