@@ -2,3 +2,5 @@
   - @categories.each do |category|
     %li
       = link_to category.name, category_path(category)
+  %ul.pagination.pagination_wrap
+    = will_paginate @categories, :inner_window => 1, :outer_window => 0, :renderer => BootstrapPagination::Rails, :previous_label => '&larr;'.html_safe, :next_label => '&rarr;'.html_safe
