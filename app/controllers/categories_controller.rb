@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   before_action :find_category, only: :show
 
   def index
-    @categories = Category.all.order(:name)
+    @categories = Category.all.order(:name).paginate(page: params[:page], per_page: 30)
   end
 
   def show
