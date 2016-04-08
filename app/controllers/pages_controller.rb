@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   before_action :find_page, only: :show
   before_action :links, only: :show
+  before_action :translate, only: :show
 
   def index
     @pages = Page.all
@@ -17,6 +18,10 @@ class PagesController < ApplicationController
 
     def links
       @links = @page.page_links
+    end
+
+    def translate
+      @translate = PageLink.find(@page.translate)
     end
 
 end

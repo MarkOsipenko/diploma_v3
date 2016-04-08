@@ -11,9 +11,9 @@ class Page < ActiveRecord::Base
   has_one :word
   after_create :get_page_content
   after_create :detect_category
-  after_create :find_links
   after_create :find_word
-  # after_create :find_translate
+  after_create :create_translate
+  after_create :find_links
 
   class << self
     def custom_create(u)
@@ -101,12 +101,11 @@ class Page < ActiveRecord::Base
 
   def create_translate
     find_translate
-
     if @translate.first != nil
       translate_link = enescape_link(@translate.first['href'])
       if check_link_format(translate_link)
         transl = PageLink.create(url: translate_link, name: @translate.first['title'])
-        self.translate = transl.id 
+        self.translate = transl.id
       end
     end
   end
