@@ -89,21 +89,25 @@ class Page < ActiveRecord::Base
     /^https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_-]+$/ === url
   end
 
-  def find_and_create_translate
+  def find_translate
     if detect_domain == "en.wikipedia.org"
-      translate = @result_parsing_page.css("div#p-lang li.interwiki-ru a")
-      if translate.first != nil
-        enescape_link(translate.first['href'])
-      end
-
+      @translate = @result_parsing_page.css("div#p-lang li.interwiki-ru a")
     elsif detect_domain == "ru.wikipedia.org"
-      translate = @result_parsing_page.css("div#p-lang li.interwiki-en a")
-      if translate.first != nil
-        enescape_link(translate.first['href'])
-      end
-
+      @translate = @result_parsing_page.css("div#p-lang li.interwiki-en a")
     elsif
-      nil
+      @translate = nil
+    end
+  end
+
+  def create_translate
+    find_translate
+
+    if @translate.first != nil
+      translate_link = enescape_link(@translate.first['href'])
+      if check_link_format(translate_link)
+        transl = PageLink.create(url: translate_link, name: @translate.first['title'])
+        self.translate = transl.id 
+      end
     end
   end
 end
