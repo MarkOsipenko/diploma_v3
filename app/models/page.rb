@@ -13,6 +13,7 @@ class Page < ActiveRecord::Base
   after_create :detect_category
   after_create :find_links
   after_create :find_word
+  # after_create :find_translate
 
   class << self
     def custom_create(u)
@@ -86,5 +87,23 @@ class Page < ActiveRecord::Base
 
   def check_link_format(url)
     /^https:\/\/(ru|en).wikipedia.org\/wiki\/[0-9a-zA-ZА-Яа-я_-]+$/ === url
+  end
+
+  def find_and_create_translate
+    if detect_domain == "en.wikipedia.org"
+      translate = @result_parsing_page.css("div#p-lang li.interwiki-ru a")
+      if translate.first != nil
+        enescape_link(translate.first['href'])
+      end
+
+    elsif detect_domain == "ru.wikipedia.org"
+      translate = @result_parsing_page.css("div#p-lang li.interwiki-en a")
+      if translate.first != nil
+        enescape_link(translate.first['href'])
+      end
+
+    elsif
+      nil
+    end
   end
 end
