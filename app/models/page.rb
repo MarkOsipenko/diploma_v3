@@ -94,7 +94,7 @@ class Page < ActiveRecord::Base
       @translate = @result_parsing_page.css("div#p-lang li.interwiki-ru a")
     elsif detect_domain == "ru.wikipedia.org"
       @translate = @result_parsing_page.css("div#p-lang li.interwiki-en a")
-    elsif
+    else
       @translate = nil
     end
   end
@@ -104,8 +104,8 @@ class Page < ActiveRecord::Base
     if @translate.first != nil
       translate_link = enescape_link(@translate.first['href'])
       if check_link_format(translate_link)
-        transl = PageLink.create(url: translate_link, name: @translate.first['title'])
-        self.translate = transl.id
+        self.translate = translate_link
+        self.save
       end
     end
   end
