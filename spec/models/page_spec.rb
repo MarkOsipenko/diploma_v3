@@ -73,5 +73,26 @@ RSpec.describe Page, type: :model do
       let!(:page1) { Page.custom_create("https://ru.wikipedia.org/wiki/Мумий_Тролль") }
       it { expect(page1.word.definition).to eq("Мумий Тролль") }
     end
+
+    context "check find_translate method" do
+      let!(:page_without_translate) { Page.custom_create("https://en.wikipedia.org/wiki/Districts_of_Bangladesh") }
+      let!(:page_with_en) { Page.custom_create("https://ru.wikipedia.org/wiki/Бенгальский_язык") }
+      let!(:page_with_ru) { Page.custom_create("https://en.wikipedia.org/wiki/Bengali_language") }
+      let!(:page1_with_en) { Page.custom_create("https://ru.wikipedia.org/wiki/Андаманские_и_Никобарские_острова") }
+      let!(:page1_with_ru) { Page.custom_create("https://en.wikipedia.org/wiki/Andaman_Islands") }
+      before { page_without_translate.create_translate }
+      it { expect(page_without_translate.translate).to eq(nil) }
+
+      context "check link in one page" do
+        before do
+          page_with_en.create_translate
+          page_with_ru.create_translate
+        end
+
+        it { expect(page_with_en.translate).to eq(page_with_ru) }
+        it { expect(page_with_ru.translate).to eq(page_with_en) }
+      end
+
+    end
   end
 end
