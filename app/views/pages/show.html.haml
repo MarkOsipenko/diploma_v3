@@ -4,7 +4,7 @@
   %a.show_links.btn.btn-primary{"aria-controls" => "collapsCategories", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseCategories", :role => "button"}
     Categories
 
-  = link_to "translate", page_path(@translate)
+  = render "pages/link_to_translate", page: @page, translate: @translation
 
   #collapseLinks.collapse
     .well

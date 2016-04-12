@@ -21,7 +21,7 @@ class PagesController < ApplicationController
     end
 
     def translate
-      @translate = Page.find_by_url(self.translate) 
+      @translation = Page.find_by_url(@page.translation)
     end
 
 end

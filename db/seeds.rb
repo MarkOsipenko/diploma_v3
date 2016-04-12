@@ -7,3 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Page.custom_create("https://ru.wikipedia.org/wiki/Лондонская_национальная_галерея")
+Page.custom_create("https://en.wikipedia.org/wiki/National_Gallery")

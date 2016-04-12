@@ -104,7 +104,7 @@ class Page < ActiveRecord::Base
     if @translate.first != nil
       translate_link = enescape_link(@translate.first['href'])
       if check_link_format(translate_link)
-        self.translate = translate_link
+        self.translation = translate_link
         self.save
       end
     end
