@@ -44,6 +44,7 @@ gem 'addressable'
 gem 'will_paginate-bootstrap'
 gem 'foreman', '~> 0.78.0'
 gem "d3-rails"
+gem 'gon', '~> 6.0', '>= 6.0.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

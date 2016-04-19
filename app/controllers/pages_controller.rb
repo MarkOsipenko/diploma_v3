@@ -5,6 +5,7 @@ class PagesController < ApplicationController
 
   def index
     @pages = Page.all
+    gon.links = @pages.to_json
   end
 
   def show
