@@ -8,9 +8,9 @@
 
   #collapseLinks.collapse
     .well
-      - @links.each do |link|
+      - @existing_links.each do |link|
         %li.page-link
-          = link_to link.name, page_path(Page.find_by_url(link.url).id) unless Page.find_by_url(link.url) == nil
+          = link_to PageLink.find_by_url(link.url).name, page_path(link.id)
 
   #collapseCategories.collapse
     .well

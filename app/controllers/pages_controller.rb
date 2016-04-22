@@ -5,10 +5,10 @@ class PagesController < ApplicationController
 
   def index
     @pages = Page.all
-    gon.links = @pages.to_json
   end
 
   def show
+    gon.links = @existing_links.to_json
   end
 
   protected
@@ -18,7 +18,12 @@ class PagesController < ApplicationController
     end
 
     def links
+      @existing_links = []
       @links = @page.page_links
+      @links.each do |link|
+        page = Page.find_by_url(link.url)
+        @existing_links << page unless page == nil
+      end
     end
 
     def translate
