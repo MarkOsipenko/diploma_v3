@@ -16,11 +16,17 @@
  }
 }
 
-.chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
+.graph_with_links {
+  text-align: center;
+
+  .node {
+    fill: #ccc;
+    stroke: #fff;
+    stroke-width: 1px;
+  }
+
+  .link {
+    stroke: #777;
+    stroke-width: 2px;
+  }
 }
