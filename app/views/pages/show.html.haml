@@ -1,5 +1,8 @@
 .container
   .graph_with_links.container
+    #container
+      #graph
+      #notes
   %a.show_links.btn.btn-primary{"aria-controls" => "collapseLinks", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseLinks", :role => "button"}
     Links
   %a.show_links.btn.btn-primary{"aria-controls" => "collapsCategories", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseCategories", :role => "button"}
@@ -9,7 +12,7 @@
 
   #collapseLinks.collapse
     .well
-      - @existing_links.each do |link|
+      - @existing_pages.each do |link|
         %li.page-link
           = link_to PageLink.find_by_url(link.url).name, page_path(link.id)
 
