@@ -1,4 +1,4 @@
 .container
   - @pages.each do |page|
     %li.to-page
-      = link_to PageLink.find_by_url(page.url).name, page_path(page)
+      = link_to PageLink.find_by_url(page.url).name, page_path(page) unless PageLink.find_by_url(page.url) == nil
