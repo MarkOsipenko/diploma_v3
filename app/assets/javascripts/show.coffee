@@ -42,7 +42,7 @@ $(document).on 'page:load ready', ->
   labelFill = '#444'
   adjLabelFill = '#A4A4A4'
   edgeStroke = '#aaa'
-  nodeFill = '#ccc'
+  nodeFill = '#337ab7'
   nodeRadius = 10
   selectedNodeRadius = 30
   linkDistance = Math.min(width, height) / 2
@@ -86,7 +86,7 @@ $(document).on 'page:load ready', ->
     select.attr 'transform', 'translate(' + shiftX + ',' + shiftY + ')'
     return
 
-  data = fullPageArray
+  data = fullPageArray.slice(0, 15)
   nodes = data.map((entry, idx, list) ->
     node = {}
     node.id = entry.link.id
@@ -95,6 +95,7 @@ $(document).on 'page:load ready', ->
     node.name = entry.link.word.definition
     node.description = entry.link.word.content
     node.links = entry.link.linkToPages
+    node.color = "#FE2E2E"
     radius = 0.4 * Math.min(height, width)
     theta = idx * 2 * Math.PI / list.length
     node.x = width / 2 + radius * Math.sin(theta)
