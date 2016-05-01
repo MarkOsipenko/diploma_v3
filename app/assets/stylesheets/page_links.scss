@@ -1,0 +1,11 @@
+// Place all the styles related to the PageLinks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.container-link {
+  li.page-link {
+    display: inline-block;
+    border: 1px solid #848484;
+  }
+}
